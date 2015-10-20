@@ -1,9 +1,10 @@
-﻿<Window x:Class="RanjitUI.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Time-sheet app" Height="300" Width="525" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow">
-    <Grid>
-        <TextBox x:Name="txbWorkType" HorizontalAlignment="Left" Height="31" Margin="116,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        x:Class="RanjitUI.MainWindow"
+        Title="Time-sheet app" Height="341" Width="510" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow">
+    <Grid Margin="0,37,0,0">
+        <TextBox x:Name="txbWorkType" HorizontalAlignment="Left" Height="31" Margin="116,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="TxbWorkType_OnTextChanged"/>
         <Label x:Name="lblWorkType" Content="Work type" HorizontalAlignment="Left" Height="31" Margin="29,13,0,0" VerticalAlignment="Top" Width="82"/>
         <TextBox x:Name="txbHours" HorizontalAlignment="Left" Height="31" Margin="116,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="lblHours" Content="Hours" HorizontalAlignment="Left" Height="31" Margin="29,49,0,0" VerticalAlignment="Top" Width="82"/>
@@ -11,12 +12,16 @@
         <Label x:Name="lblCostUnit" Content="Cost unit" HorizontalAlignment="Left" Height="31" Margin="29,121,0,0" VerticalAlignment="Top" Width="82"/>
         <TextBox x:Name="txbCostCenter" HorizontalAlignment="Left" Height="31" Margin="116,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txbCostUnit" HorizontalAlignment="Left" Height="31" Margin="116,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Height="38" Margin="60,212,0,0" VerticalAlignment="Top" Width="153" IsDefault="True" Background="#FF1F9540"/>
+        <Button x:Name="btnStart" Content="Give work to Ranjit" HorizontalAlignment="Left" Height="38" Margin="113,212,0,0" VerticalAlignment="Top" Width="153" IsDefault="True" Background="#FF1F9540" Click="btnStart_Click"/>
         <Button x:Name="btnClear" Content="Clear all" HorizontalAlignment="Left" Height="38" Margin="291,212,0,0" VerticalAlignment="Top" Width="153" Background="#FFF2F1DC"/>
         <Image x:Name="imgMain" HorizontalAlignment="Left" Height="138" Margin="291,14,0,0" VerticalAlignment="Top" Width="177"/>
         <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Left" Height="31" Margin="116,157,0,0" VerticalAlignment="Top" Width="150" FirstDayOfWeek="Monday" ToolTip="Date from"/>
         <DatePicker HorizontalAlignment="Left" Height="31" Margin="294,157,0,0" VerticalAlignment="Top" Width="150" ToolTip="Date to"/>
         <Label x:Name="lblPeriod" Content="Period" HorizontalAlignment="Left" Height="31" Margin="29,157,0,0" VerticalAlignment="Top" Width="82"/>
+        <TextBox x:Name="txbUserName" HorizontalAlignment="Left" Height="21" Margin="113,-30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <Label x:Name="lblUser" Content="user" HorizontalAlignment="Left" Height="21" Margin="55,-30,0,0" VerticalAlignment="Top" Width="53" FontSize="10"/>
+        <Label x:Name="lblPassword" Content="password" HorizontalAlignment="Left" Height="21" Margin="273,-30,0,0" VerticalAlignment="Top" Width="53" FontSize="10"/>
+        <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="21" Margin="331,-30,0,0" VerticalAlignment="Top" Width="113" PasswordChar="*"/>
 
     </Grid>
 </Window>
