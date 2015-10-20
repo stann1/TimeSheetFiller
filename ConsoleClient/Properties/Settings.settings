@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ConsoleApplication2.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DefaultCostUnit" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">253500001</Value>
+    </Setting>
+    <Setting Name="DefaultCostCenter" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">253511</Value>
+    </Setting>
+    <Setting Name="DefaultWorkType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">102</Value>
+    </Setting>
+    <Setting Name="DefaultUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gfk\bai.gosho</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
