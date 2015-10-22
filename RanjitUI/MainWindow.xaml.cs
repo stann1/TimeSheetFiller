@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SeleniumWorker;
 
 namespace RanjitUI
 {
@@ -53,6 +54,41 @@ namespace RanjitUI
             Properties.Settings.Default.DefaultCostCenter = long.Parse(this.txbCostCenter.Text);
 
             Properties.Settings.Default.Save();
+
+            DateTime start = this.dtpStartDate.SelectedDate ?? DateTime.Now;
+            DateTime end = this.dtpEndDate.SelectedDate ?? DateTime.Now;
+
+            this.imgMain.Visibility = Visibility.Visible;
+
+            //StartSeleniumWorker(userName, password, start, end);
+
+            //this.imgMain.Visibility = Visibility.Hidden;
+        }
+
+        private void StartSeleniumWorker(string userName, string password, DateTime startDate, DateTime endDate)
+        {
+            WebPortalWorker worker = new WebPortalWorker();
+
+            int workType = Properties.Settings.Default.DefaultWorkType;
+            double hoursWorked = Properties.Settings.Default.DefaultHours;
+            long costUnit = Properties.Settings.Default.DefaultCostUnit;
+            long costCenter = Properties.Settings.Default.DefaultCostCenter;
+            WorkItem workItem = new WorkItem()
+            {
+                WorkTypeCode = workType,
+                WorkHours = hoursWorked,
+                CostCenterCode = costCenter,
+                CostUnitCode = costUnit
+            };
+
+            try
+            {
+                worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private void SetCostCategoriesVisibility(int defaultWorkType)
