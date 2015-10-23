@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,15 +60,32 @@ namespace RanjitUI
             DateTime end = this.dtpEndDate.SelectedDate ?? DateTime.Now;
 
             this.imgMain.Visibility = Visibility.Visible;
+            this.btnStart.IsEnabled = false;
 
-            //StartSeleniumWorker(userName, password, start, end);
-
-            //this.imgMain.Visibility = Visibility.Hidden;
+            StartSeleniumWorker(userName, password, start, end);
         }
 
-        private void StartSeleniumWorker(string userName, string password, DateTime startDate, DateTime endDate)
+        private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            WebPortalWorker worker = new WebPortalWorker();
+            this.txbWorkType.Text = string.Empty;
+            this.txbHours.Text = string.Empty;
+            this.dtpStartDate.SelectedDate = null;
+            this.dtpEndDate.SelectedDate = null;
+        }
+
+        private void TxbWorkType_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            int workType;
+            bool parsed = int.TryParse(this.txbWorkType.Text, out workType);
+            if (parsed)
+            {
+                SetCostCategoriesVisibility(workType);
+            }
+        }
+
+        private async void StartSeleniumWorker(string userName, string password, DateTime startDate, DateTime endDate)
+        {
+            //WebPortalWorker worker = new WebPortalWorker();
 
             int workType = Properties.Settings.Default.DefaultWorkType;
             double hoursWorked = Properties.Settings.Default.DefaultHours;
@@ -81,14 +99,14 @@ namespace RanjitUI
                 CostUnitCode = costUnit
             };
 
-            try
+            await Task.Run(() =>
             {
-                worker.FillInPeriod(userName, password, startDate, endDate, workItem);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                Thread.Sleep(3000);
+                //worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+            });
+
+            this.imgMain.Visibility = Visibility.Hidden;
+            this.btnStart.IsEnabled = true;
         }
 
         private void SetCostCategoriesVisibility(int defaultWorkType)
@@ -107,12 +125,6 @@ namespace RanjitUI
                 txbCostCenter.IsEnabled = true;
                 txbCostUnit.IsEnabled = false;
             }
-        }
-        
-        private void TxbWorkType_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            int workType = int.Parse(this.txbWorkType.Text);
-            SetCostCategoriesVisibility(workType);
         }
     }
 }
