@@ -34,30 +34,29 @@ namespace SeleniumWorker
 
                 Thread.Sleep(7000);
 
-                if (endDate.Date <= startDate.Date)
+                //if (endDate.Date <= startDate.Date)
+                //{
+                //    // Create today 
+                //    _driver.FindElement(By.XPath(" .//*[@id='CreateStart-button']")).Click();
+                //    Thread.Sleep(4000);
+
+                //    FillInDay(workItem);
+                //}
+                
+                // create for range
+                while (startDate.Date <= endDate.Date)
                 {
-                    // Create today 
-                    _driver.FindElement(By.XPath(" .//*[@id='CreateStart-button']")).Click();
-                    Thread.Sleep(4000);
+                    _driver.FindElement(By.XPath(".//*[@id='Create-button']")).Click();
+                    Thread.Sleep(3000);
+                    _driver.FindElement(By.XPath(".//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
+                        .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
+                    _driver.FindElement(By.XPath(".//*[@id='SaveCreate-button']")).Click();
+                    
+                    Thread.Sleep(3000);
 
                     FillInDay(workItem);
-                }
-                else
-                {
-                    // create for range
-                    while (startDate.Date <= endDate.Date)
-                    {
-                        _driver.FindElement(By.XPath(" .//*[@id='Create-button']")).Click();
-                        Thread.Sleep(4000);
-                        _driver.FindElement(By.XPath(" .//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
-                            .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
-                        _driver.FindElement(By.XPath(" .//*[@id='SaveCreate-button']")).Click();
-                        Thread.Sleep(4000);
 
-                        FillInDay(workItem);
-
-                        startDate = startDate.AddDays(1);
-                    }
+                    startDate = startDate.AddDays(1);
                 }
 
                 Logout();

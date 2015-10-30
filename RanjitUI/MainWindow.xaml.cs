@@ -27,7 +27,11 @@ namespace RanjitUI
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+        }
 
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             int defaultWorkType = Properties.Settings.Default.DefaultWorkType;
 
             this.txbUserName.Text = Properties.Settings.Default.DefaultUser;
@@ -85,7 +89,7 @@ namespace RanjitUI
 
         private async void StartSeleniumWorker(string userName, string password, DateTime startDate, DateTime endDate)
         {
-            //WebPortalWorker worker = new WebPortalWorker();
+            WebPortalWorker worker = new WebPortalWorker();
 
             int workType = Properties.Settings.Default.DefaultWorkType;
             double hoursWorked = Properties.Settings.Default.DefaultHours;
@@ -102,7 +106,7 @@ namespace RanjitUI
             await Task.Run(() =>
             {
                 Thread.Sleep(3000);
-                //worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+                worker.FillInPeriod(userName, password, startDate, endDate, workItem);
             });
 
             this.imgMain.Visibility = Visibility.Hidden;

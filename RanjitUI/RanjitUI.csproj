@@ -101,7 +101,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="lib\ranjit.jpg" />
+    <Resource Include="lib\ranjit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="lib\ranjit-icon.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
