@@ -61,7 +61,7 @@ namespace RanjitUI
             Properties.Settings.Default.Save();
 
             DateTime start = this.dtpStartDate.SelectedDate ?? DateTime.Now;
-            DateTime end = this.dtpEndDate.SelectedDate ?? DateTime.Now;
+            DateTime end = this.dtpEndDate.SelectedDate ?? start;
 
             this.imgMain.Visibility = Visibility.Visible;
             this.btnStart.IsEnabled = false;
