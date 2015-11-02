@@ -18,7 +18,10 @@ namespace SeleniumWorker
 
         public WebPortalWorker()
         {
-            _driver = new InternetExplorerDriver();
+            if (_driver == null)
+            {
+                _driver = new InternetExplorerDriver();
+            }
         }
 
         public static WebDriverWait GlobaWait { get; set; }
@@ -42,21 +45,29 @@ namespace SeleniumWorker
 
                 //    FillInDay(workItem);
                 //}
-                
-                // create for range
-                while (startDate.Date <= endDate.Date)
+
+                try
                 {
-                    _driver.FindElement(By.XPath(".//*[@id='Create-button']")).Click();
-                    Thread.Sleep(3000);
-                    _driver.FindElement(By.XPath(".//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
-                        .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
-                    _driver.FindElement(By.XPath(".//*[@id='SaveCreate-button']")).Click();
-                    
-                    Thread.Sleep(3000);
+                    // create for range
+                    while (startDate.Date <= endDate.Date)
+                    {
+                        _driver.FindElement(By.XPath(".//*[@id='Create-button']")).Click();
+                        Thread.Sleep(3000);
+                        _driver.FindElement(By.XPath(".//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
+                            .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
+                        Thread.Sleep(3000);
+                        _driver.FindElement(By.XPath(".//*[@id='LinesForm']")).Click();
 
-                    FillInDay(workItem);
+                        Thread.Sleep(3000);
 
-                    startDate = startDate.AddDays(1);
+                        FillInDay(workItem);
+
+                        startDate = startDate.AddDays(1);
+                    }
+                }
+                catch(NoSuchElementException nex)
+                {
+                    throw new InvalidOperationException("The element was not found. " + nex.Message, nex.InnerException);
                 }
 
                 Logout();

@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SeleniumWorker;
 
 namespace RanjitUI
@@ -66,7 +56,9 @@ namespace RanjitUI
             this.imgMain.Visibility = Visibility.Visible;
             this.btnStart.IsEnabled = false;
 
-            StartSeleniumWorker(userName, password, start, end);
+            
+            StartSeleniumWorkerAsync(userName, password, start, end);
+            
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -87,7 +79,7 @@ namespace RanjitUI
             }
         }
 
-        private async void StartSeleniumWorker(string userName, string password, DateTime startDate, DateTime endDate)
+        private async void StartSeleniumWorkerAsync(string userName, string password, DateTime startDate, DateTime endDate)
         {
             WebPortalWorker worker = new WebPortalWorker();
 
@@ -103,11 +95,18 @@ namespace RanjitUI
                 CostUnitCode = costUnit
             };
 
-            await Task.Run(() =>
+            try
             {
-                Thread.Sleep(3000);
-                worker.FillInPeriod(userName, password, startDate, endDate, workItem);
-            });
+                await Task.Run(() =>
+                {
+                    Thread.Sleep(3000);
+                    worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("WebWorker error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             this.imgMain.Visibility = Visibility.Hidden;
             this.btnStart.IsEnabled = true;

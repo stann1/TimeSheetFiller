@@ -4,7 +4,7 @@
         xmlns:properties="clr-namespace:RanjitUI.Properties"
         x:Class="RanjitUI.MainWindow"
         Title="Time-sheet app" Height="341" Width="510" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow"
-        Icon="pack://application:,,,/lib/ranjit-icon.jpg" >
+        Icon="pack://application:,,,/Resources/ranjit-icon.jpg" >
     <Grid Margin="0,37,0,0">
         <TextBox x:Name="txbWorkType" HorizontalAlignment="Left" Height="31" Margin="116,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="TxbWorkType_OnTextChanged"/>
         <Label x:Name="lblWorkType" Content="Work type" HorizontalAlignment="Left" Height="31" Margin="29,13,0,0" VerticalAlignment="Top" Width="82"/>
@@ -16,7 +16,7 @@
         <TextBox x:Name="txbCostUnit" HorizontalAlignment="Left" Height="31" Margin="116,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button x:Name="btnStart" Content="Give work to Ranjit" HorizontalAlignment="Left" Height="38" Margin="113,212,0,0" VerticalAlignment="Top" Width="153" IsDefault="True" Background="#FF1F9540" Click="btnStart_Click"/>
         <Button x:Name="btnClear" Content="Clear all" HorizontalAlignment="Left" Height="38" Margin="291,212,0,0" VerticalAlignment="Top" Width="153" Background="#FFF2F1DC" Click="btnClear_Click"/>
-        <Image x:Name="imgMain" HorizontalAlignment="Left" Height="138" Margin="291,14,0,0" VerticalAlignment="Top" Width="177" Source="pack://application:,,,/lib/ranjit.jpg" Visibility="Hidden" />
+        <Image x:Name="imgMain" HorizontalAlignment="Left" Height="138" Margin="291,14,0,0" VerticalAlignment="Top" Width="177" Source="pack://application:,,,/Resources/ranjit.jpg" Visibility="Hidden" />
         <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Left" Height="31" Margin="116,157,0,0" VerticalAlignment="Top" Width="150" FirstDayOfWeek="Monday" ToolTip="Date from"/>
         <DatePicker x:Name="dtpEndDate" HorizontalAlignment="Left" Height="31" Margin="294,157,0,0" VerticalAlignment="Top" Width="150" ToolTip="Date to"/>
         <Label x:Name="lblPeriod" Content="Period" HorizontalAlignment="Left" Height="31" Margin="29,157,0,0" VerticalAlignment="Top" Width="82"/>

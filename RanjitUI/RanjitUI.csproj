@@ -101,14 +101,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="lib\ranjit.jpg" />
+    <Resource Include="Resources\ranjit.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="lib\ranjit-icon.jpg" />
+    <Resource Include="Resources\ranjit-icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(ProjectDir)lib\* $(targetDir) /y</PostBuildEvent>
+    <PostBuildEvent>xcopy $(ProjectDir)lib\* $(targetDir) /y /d</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
