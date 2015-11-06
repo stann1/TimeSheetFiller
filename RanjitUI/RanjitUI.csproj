@@ -109,6 +109,9 @@
   <ItemGroup>
     <Folder Include="lib\" />
   </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\doge-splash.jpeg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(ProjectDir)lib\* $(targetDir) /y /d</PostBuildEvent>

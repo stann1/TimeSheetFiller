@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:properties="clr-namespace:RanjitUI.Properties"
         x:Class="RanjitUI.MainWindow"
-        Title="Time-sheet app" Height="341" Width="510" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow"
+        Title="Time-keeper Ranjit" Height="341" Width="510" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow"
         Icon="pack://application:,,,/Resources/ranjit-icon.jpg" >
     <Grid Margin="0,37,0,0">
         <TextBox x:Name="txbWorkType" HorizontalAlignment="Left" Height="31" Margin="116,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="TxbWorkType_OnTextChanged"/>

@@ -13,6 +13,7 @@ namespace RanjitUI
     public partial class MainWindow : Window
     {
         private bool _useCostCenterInsteadOfCostUnit = false;
+        private WebPortalWorker _worker;
 
         public MainWindow()
         {
@@ -56,9 +57,12 @@ namespace RanjitUI
             this.imgMain.Visibility = Visibility.Visible;
             this.btnStart.IsEnabled = false;
 
+            if (_worker == null)
+            {
+                _worker = new WebPortalWorker();
+            }
             
             StartSeleniumWorkerAsync(userName, password, start, end);
-            
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -81,8 +85,6 @@ namespace RanjitUI
 
         private async void StartSeleniumWorkerAsync(string userName, string password, DateTime startDate, DateTime endDate)
         {
-            WebPortalWorker worker = new WebPortalWorker();
-
             int workType = Properties.Settings.Default.DefaultWorkType;
             double hoursWorked = Properties.Settings.Default.DefaultHours;
             long costUnit = Properties.Settings.Default.DefaultCostUnit;
@@ -100,7 +102,7 @@ namespace RanjitUI
                 await Task.Run(() =>
                 {
                     Thread.Sleep(3000);
-                    worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+                    _worker.FillInPeriod(userName, password, startDate, endDate, workItem);
                 });
             }
             catch (Exception ex)
