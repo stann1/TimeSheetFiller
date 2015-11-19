@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,7 +21,7 @@ namespace SeleniumWorker
         {
             if (_driver == null)
             {
-                _driver = new InternetExplorerDriver();
+                _driver = new InternetExplorerDriver(Path.Combine(Environment.CurrentDirectory, "lib"));
             }
         }
 
