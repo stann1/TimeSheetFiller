@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ namespace RanjitUI
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            _worker = new WebPortalWorker();
             int defaultWorkType = Properties.Settings.Default.DefaultWorkType;
 
             this.txbUserName.Text = Properties.Settings.Default.DefaultUser;
@@ -30,10 +32,11 @@ namespace RanjitUI
             this.txbHours.Text = Properties.Settings.Default.DefaultHours.ToString();
             this.txbCostUnit.Text = Properties.Settings.Default.DefaultCostUnit.ToString();
             this.txbCostCenter.Text = Properties.Settings.Default.DefaultCostCenter.ToString();
+
             SetCostCategoriesVisibility(defaultWorkType);
         }
         
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        private async void btnStart_Click(object sender, RoutedEventArgs e)
         {
             string userName = this.txbUserName.Text;
             Properties.Settings.Default.DefaultUser = userName;
@@ -56,13 +59,17 @@ namespace RanjitUI
 
             this.imgMain.Visibility = Visibility.Visible;
             this.btnStart.IsEnabled = false;
-
-            if (_worker == null)
-            {
-                _worker = new WebPortalWorker();
-            }
             
-            StartSeleniumWorkerAsync(userName, password, start, end);
+            await StartSeleniumWorkerAsync(userName, password, start, end);
+
+            var isChecked = this.autoLogOutChkb.IsChecked;
+            if (isChecked != null && (bool)isChecked)
+            {
+                _worker.Logout();
+            }
+
+            this.imgMain.Visibility = Visibility.Hidden;
+            this.btnStart.IsEnabled = true;
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -72,7 +79,7 @@ namespace RanjitUI
             this.dtpStartDate.SelectedDate = null;
             this.dtpEndDate.SelectedDate = null;
         }
-
+        
         private void TxbWorkType_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             int workType;
@@ -83,7 +90,7 @@ namespace RanjitUI
             }
         }
 
-        private async void StartSeleniumWorkerAsync(string userName, string password, DateTime startDate, DateTime endDate)
+        private async Task StartSeleniumWorkerAsync(string userName, string password, DateTime startDate, DateTime endDate)
         {
             int workType = Properties.Settings.Default.DefaultWorkType;
             double hoursWorked = Properties.Settings.Default.DefaultHours;
@@ -96,22 +103,20 @@ namespace RanjitUI
                 CostCenterCode = costCenter,
                 CostUnitCode = costUnit
             };
-
+            
             try
             {
                 await Task.Run(() =>
                 {
-                    Thread.Sleep(3000);
-                    _worker.FillInPeriod(userName, password, startDate, endDate, workItem);
+                    Thread.Sleep(2000);
+                    _worker.Login(userName, password);
+                    _worker.FillInPeriod(startDate, endDate, workItem);
                 });
             }
             catch (Exception ex)
             {
                 MessageBox.Show("WebWorker error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            this.imgMain.Visibility = Visibility.Hidden;
-            this.btnStart.IsEnabled = true;
         }
 
         private void SetCostCategoriesVisibility(int defaultWorkType)
@@ -130,6 +135,11 @@ namespace RanjitUI
                 txbCostCenter.IsEnabled = true;
                 txbCostUnit.IsEnabled = false;
             }
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            _worker.Logout();
         }
     }
 }

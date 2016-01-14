@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:properties="clr-namespace:RanjitUI.Properties"
         x:Class="RanjitUI.MainWindow"
-        Title="Time-keeper Ranjit" Height="341" Width="510" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow"
-        Icon="pack://application:,,,/Resources/ranjit-icon.jpg" >
+        Title="Time-keeper Ranjit" Height="353" Width="519" Background="#FFE7F4F6" WindowStyle="ThreeDBorderWindow"
+        Icon="pack://application:,,,/Resources/ranjit-icon.jpg"
+        Closing="MainWindow_OnClosing">
     <Grid Margin="0,37,0,0">
         <TextBox x:Name="txbWorkType" HorizontalAlignment="Left" Height="31" Margin="116,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="TxbWorkType_OnTextChanged"/>
         <Label x:Name="lblWorkType" Content="Work type" HorizontalAlignment="Left" Height="31" Margin="29,13,0,0" VerticalAlignment="Top" Width="82"/>
@@ -14,8 +15,8 @@
         <Label x:Name="lblCostUnit" Content="Cost unit" HorizontalAlignment="Left" Height="31" Margin="29,121,0,0" VerticalAlignment="Top" Width="82"/>
         <TextBox x:Name="txbCostCenter" HorizontalAlignment="Left" Height="31" Margin="116,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txbCostUnit" HorizontalAlignment="Left" Height="31" Margin="116,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnStart" Content="Give work to Ranjit" HorizontalAlignment="Left" Height="38" Margin="113,212,0,0" VerticalAlignment="Top" Width="153" IsDefault="True" Background="#FF1F9540" Click="btnStart_Click"/>
-        <Button x:Name="btnClear" Content="Clear all" HorizontalAlignment="Left" Height="38" Margin="291,212,0,0" VerticalAlignment="Top" Width="153" Background="#FFF2F1DC" Click="btnClear_Click"/>
+        <Button x:Name="btnStart" Content="Give work to Ranjit" HorizontalAlignment="Left" Height="38" Margin="113,217,0,0" VerticalAlignment="Top" Width="153" IsDefault="True" Background="#FF1F9540" Click="btnStart_Click"/>
+        <Button x:Name="btnClear" Content="Clear all" HorizontalAlignment="Left" Height="38" Margin="291,217,0,0" VerticalAlignment="Top" Width="153" Background="#FFF2F1DC" Click="btnClear_Click"/>
         <Image x:Name="imgMain" HorizontalAlignment="Left" Height="138" Margin="291,14,0,0" VerticalAlignment="Top" Width="177" Source="pack://application:,,,/Resources/ranjit.jpg" Visibility="Hidden" />
         <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Left" Height="31" Margin="116,157,0,0" VerticalAlignment="Top" Width="150" FirstDayOfWeek="Monday" ToolTip="Date from"/>
         <DatePicker x:Name="dtpEndDate" HorizontalAlignment="Left" Height="31" Margin="294,157,0,0" VerticalAlignment="Top" Width="150" ToolTip="Date to"/>
@@ -24,6 +25,7 @@
         <Label x:Name="lblUser" Content="user" HorizontalAlignment="Left" Height="21" Margin="55,-30,0,0" VerticalAlignment="Top" Width="53" FontSize="10"/>
         <Label x:Name="lblPassword" Content="password" HorizontalAlignment="Left" Height="21" Margin="273,-30,0,0" VerticalAlignment="Top" Width="53" FontSize="10"/>
         <PasswordBox x:Name="pwbPassword" HorizontalAlignment="Left" Height="21" Margin="331,-30,0,0" VerticalAlignment="Top" Width="113" PasswordChar="*"/>
+        <CheckBox x:Name="autoLogOutChkb" Content="Auto logout" HorizontalAlignment="Left" Margin="39,193,0,0" VerticalAlignment="Top" IsChecked="True" />
 
     </Grid>
 </Window>

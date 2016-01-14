@@ -13,16 +13,12 @@ namespace SeleniumWorker
 {
     public class WebPortalWorker
     {
-        private readonly string WebPortalUrl = "https://webportal.gfk.com/BG/A/Account#/Login";
-
-        private readonly IWebDriver _driver;
+        private const string WebPortalUrl = "https://webportal.gfk.com/BG/A/Account#/Login";
+        private IWebDriver _driver;
+        private bool _userIsLoggedIn;
 
         public WebPortalWorker()
         {
-            if (_driver == null)
-            {
-                _driver = new InternetExplorerDriver(Path.Combine(Environment.CurrentDirectory, "lib"));
-            }
         }
 
         public static WebDriverWait GlobaWait { get; set; }
@@ -30,48 +26,46 @@ namespace SeleniumWorker
         /// <summary>
         /// Fills in time-sheet data for the selected period for a single work item
         /// </summary>
-        public void FillInPeriod(string userName, string password, DateTime startDate, DateTime endDate, WorkItem workItem)
+        public void FillInPeriod(DateTime startDate, DateTime endDate, WorkItem workItem)
         {
-            using (_driver)
+            if (!_userIsLoggedIn)
             {
-                Login(userName, password);
+                throw new InvalidOperationException("No logged in user. Call Login method first");
+            }
 
-                Thread.Sleep(7000);
+            Thread.Sleep(7000);
 
-                //if (endDate.Date <= startDate.Date)
-                //{
-                //    // Create today 
-                //    _driver.FindElement(By.XPath(" .//*[@id='CreateStart-button']")).Click();
-                //    Thread.Sleep(4000);
+            //if (endDate.Date <= startDate.Date)
+            //{
+            //    // Create today 
+            //    _driver.FindElement(By.XPath(" .//*[@id='CreateStart-button']")).Click();
+            //    Thread.Sleep(4000);
 
-                //    FillInDay(workItem);
-                //}
+            //    FillInDay(workItem);
+            //}
 
-                try
+            try
+            {
+                // create for range
+                while (startDate.Date <= endDate.Date)
                 {
-                    // create for range
-                    while (startDate.Date <= endDate.Date)
-                    {
-                        _driver.FindElement(By.XPath(".//*[@id='Create-button']")).Click();
-                        Thread.Sleep(3000);
-                        _driver.FindElement(By.XPath(".//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
-                            .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
-                        Thread.Sleep(3000);
-                        _driver.FindElement(By.XPath(".//*[@id='LinesForm']")).Click();
+                    _driver.FindElement(By.XPath(".//*[@id='Create-button']")).Click();
+                    Thread.Sleep(3000);
+                    _driver.FindElement(By.XPath(".//*[@id='dtp_TimeRecordingEntries_DocumentDate']"))
+                        .SendKeys(startDate.Date.ToString("MM/dd/yyyy"));
+                    Thread.Sleep(3000);
+                    _driver.FindElement(By.XPath(".//*[@id='LinesForm']")).Click();
 
-                        Thread.Sleep(3000);
+                    Thread.Sleep(3000);
 
-                        FillInDay(workItem);
+                    FillInDay(workItem);
 
-                        startDate = startDate.AddDays(1);
-                    }
+                    startDate = startDate.AddDays(1);
                 }
-                catch(NoSuchElementException nex)
-                {
-                    throw new InvalidOperationException("The element was not found. " + nex.Message, nex.InnerException);
-                }
-
-                Logout();
+            }
+            catch (NoSuchElementException nex)
+            {
+                throw new InvalidOperationException("The element was not found. " + nex.Message, nex.InnerException);
             }
         }
 
@@ -110,15 +104,30 @@ namespace SeleniumWorker
             Thread.Sleep(3000);
         }
 
-        private void Logout()
+        public void Logout()
         {
+            if (!_userIsLoggedIn)
+            {
+                return;
+            }
+
             Thread.Sleep(2000);
             _driver.FindElement(By.XPath(".//*[@id='scrollContainer']/ul/li[9]/a")).Click();
+            Thread.Sleep(1000);
+
+            _userIsLoggedIn = false;
+            _driver.Dispose();
             _driver.Quit();
         }
 
-        private void Login(string userName, string password)
+        public void Login(string userName, string password)
         {
+            if (_userIsLoggedIn)
+            {
+                return;
+            }
+
+            _driver = new InternetExplorerDriver(Path.Combine(Environment.CurrentDirectory, "lib"));
             _driver.Navigate().GoToUrl(WebPortalUrl);
 
             GlobaWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(20));
@@ -129,6 +138,9 @@ namespace SeleniumWorker
             _driver.FindElement(By.XPath(".//*[@id='Password']/div/input")).SendKeys(password);
             Thread.Sleep(2000);
             _driver.FindElement(By.XPath(".//*[@id='Password']/div/input")).SendKeys(Keys.Enter);
+
+            _userIsLoggedIn = true;
         }
+
     }
 }
